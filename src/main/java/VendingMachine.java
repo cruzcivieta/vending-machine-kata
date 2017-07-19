@@ -103,7 +103,7 @@ public class VendingMachine {
         }
 
         double value = prices.get(l).get(Integer.valueOf(c));
-        if (value >= money) {
+        if (value > money) {
             return "Put more money!";
         }
 

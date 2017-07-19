@@ -25,4 +25,14 @@ public class VendingMachineShould {
         assertThat(result).isEqualTo("Put more money!");
     }
 
+    @Test
+    public void retrieve_the_selected_can() {
+        String validCode = "A1";
+        Double validMoney = 2.8;
+        VendingMachine vendingMachine = new VendingMachine();
+
+        String result = vendingMachine.fetch(validMoney, validCode);
+
+        assertThat(result).isEqualTo("Yellow Monster");
+    }
 }
