@@ -98,23 +98,23 @@ public class VendingMachine {
                 c = String.valueOf(code.charAt(i));
             }
         }
-        if (prices.containsKey(l)) {
-            double value = prices.get(l).get(Integer.valueOf(c));
-            if (value < money) {
-                int lf = amount.get(l).get(Integer.valueOf(c));
-                if (lf > 0) {
-                    Integer a = amount.get(l).get(Integer.valueOf(c));
-                    amount.get(l).set(Integer.valueOf(c), a - 1);
+        if (!prices.containsKey(l)) {
+            return "Does not exist that code";
+        }
 
-                    return products.get(l).get(Integer.valueOf(c));
-                } else {
-                    return "There are no products for code";
-                }
-            } else {
-                return "Put more money!";
-            }
+        double value = prices.get(l).get(Integer.valueOf(c));
+        if (value >= money) {
+            return "Put more money!";
+        }
+
+        int lf = amount.get(l).get(Integer.valueOf(c));
+        if (lf > 0) {
+            Integer a = amount.get(l).get(Integer.valueOf(c));
+            amount.get(l).set(Integer.valueOf(c), a - 1);
+
+            return products.get(l).get(Integer.valueOf(c));
         } else {
-            return "Does not exists that code";
+            return "There are no products for code";
         }
     }
 
