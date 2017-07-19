@@ -35,4 +35,16 @@ public class VendingMachineShould {
 
         assertThat(result).isEqualTo("Yellow Monster");
     }
+
+    @Test
+    public void warn_when_there_are_no_cans_for_the_code() {
+        String validCode = "A0";
+        Double validMoney = 2.8;
+        VendingMachine vendingMachine = new VendingMachine();
+
+        vendingMachine.fetch(validMoney, validCode);
+        String result = vendingMachine.fetch(validMoney, validCode);
+
+        assertThat(result).isEqualTo("There are no products for code");
+    }
 }
