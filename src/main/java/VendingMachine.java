@@ -184,16 +184,10 @@ class VendingMachine {
         }});
     }
 
-    String fetch(double money, String code) {
-        Code newCode;
-        try {
-            newCode = Code.from(code);
-        } catch (CodeNotValidException e) {
-            return "Does not exist that code";
-        }
+    String fetch(double money, Code code) {
 
-        String letter = newCode.getLetter();
-        Integer number = newCode.getNumber();
+        String letter = code.getLetter();
+        Integer number = code.getNumber();
 
         if (!prices.containsKey(letter)) {
             return "Does not exist that code";
