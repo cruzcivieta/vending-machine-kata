@@ -47,4 +47,14 @@ public class VendingMachineShould {
 
         assertThat(result).isEqualTo("There are no products for code");
     }
+
+    @Test
+    public void fetch_zero_when_code_is_not_valid() throws Exception {
+        String validCode = "Z0";
+        VendingMachine vendingMachine = new VendingMachine();
+
+        Double price = vendingMachine.price(validCode);
+
+        assertThat(price).isEqualTo(0);
+    }
 }

@@ -24,4 +24,8 @@ public class Storage {
 
         return storageItem.fetchProduct();
     }
+
+    public double price(Code code) {
+        return 0;
+    }
 }
