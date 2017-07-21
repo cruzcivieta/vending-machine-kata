@@ -1,23 +1,27 @@
 class Code {
 
-    private String number;
+    private Integer number;
     private String letter;
 
-    private Code(String code) {
+    private Code(String code) throws CodeNotValidException {
         for (int i = 0; i < code.length(); i++) {
             if (i == 0) {
                 this.letter = String.valueOf(code.charAt(i));
             } else {
-                this.number = String.valueOf(code.charAt(i));
+                try {
+                    this.number = Integer.valueOf(String.valueOf(code.charAt(i)));
+                } catch (NumberFormatException exception) {
+                    throw new CodeNotValidException();
+                }
             }
         }
     }
 
-    static Code from(String code) {
+    static Code from(String code) throws CodeNotValidException {
         return new Code(code);
     }
 
-    String getNumber() {
+    Integer getNumber() {
         return number;
     }
 

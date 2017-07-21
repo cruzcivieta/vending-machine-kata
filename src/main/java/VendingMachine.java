@@ -185,28 +185,34 @@ class VendingMachine {
     }
 
     String fetch(double money, String code) {
-        Code newCode = Code.from(code);
-        String l = newCode.getLetter();
-        String c = newCode.getNumber();
-
-        if (!prices.containsKey(l)) {
+        Code newCode;
+        try {
+            newCode = Code.from(code);
+        } catch (CodeNotValidException e) {
             return "Does not exist that code";
         }
 
-        double value = prices.get(l).get(Integer.valueOf(c));
+        String letter = newCode.getLetter();
+        Integer number = newCode.getNumber();
+
+        if (!prices.containsKey(letter)) {
+            return "Does not exist that code";
+        }
+
+        double value = prices.get(letter).get(number);
         if (value > money) {
             return "Put more money!";
         }
 
-        int lf = amount.get(l).get(Integer.valueOf(c));
+        int lf = amount.get(letter).get(number);
         if (lf <= 0) {
             return "There are no products for code";
         }
 
-        Integer a = amount.get(l).get(Integer.valueOf(c));
-        amount.get(l).set(Integer.valueOf(c), a - 1);
+        Integer a = amount.get(letter).get(number);
+        amount.get(letter).set(number, a - 1);
 
-        return products.get(l).get(Integer.valueOf(c));
+        return products.get(letter).get(number);
     }
 
     double returnChange(double money, String code) {
