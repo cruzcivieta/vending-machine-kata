@@ -3,12 +3,25 @@ import java.util.HashMap;
 
 class VendingMachine {
 
+    private final Storage storage;
     private HashMap<String, ArrayList<String>> products;
     private HashMap<String, ArrayList<Integer>> amount;
     private HashMap<String, ArrayList<Double>> prices;
 
 
     VendingMachine() {
+        HashMap<Code, StorageItem> items = new HashMap<>();
+        Product yellowMonster = new Product("Yellow Monster", 2.80);
+
+        StorageItem storageItemA0 = new StorageItem(yellowMonster, 1);
+        StorageItem storageItemA1 = new StorageItem(yellowMonster, 2);
+
+        items.put(Code.from(0, "A"), storageItemA0);
+        items.put(Code.from(1, "A"), storageItemA1);
+
+        this.storage = new Storage(items);
+
+
         products = new HashMap<>();
         products.put("A", new ArrayList<String>() {{
             add("Yellow Monster");
@@ -185,28 +198,16 @@ class VendingMachine {
     }
 
     String fetch(double money, Code code) {
-
-        String letter = code.getLetter();
-        Integer number = code.getNumber();
-
-        if (!prices.containsKey(letter)) {
+        try {
+            Product product = this.storage.extract(code, money);
+            return product.getName();
+        } catch (CodeNotFound codeNotFound) {
             return "Does not exist that code";
-        }
-
-        double value = prices.get(letter).get(number);
-        if (value > money) {
+        } catch (ProductIsEmpty productIsEmpty) {
+            return "There are no products for code";
+        } catch (MoneyIsNotEnoughException e) {
             return "Put more money!";
         }
-
-        int lf = amount.get(letter).get(number);
-        if (lf <= 0) {
-            return "There are no products for code";
-        }
-
-        Integer a = amount.get(letter).get(number);
-        amount.get(letter).set(number, a - 1);
-
-        return products.get(letter).get(number);
     }
 
     double returnChange(double money, String code) {

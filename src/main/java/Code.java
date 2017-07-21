@@ -19,4 +19,20 @@ class Code {
     String getLetter() {
         return letter;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Code)) return false;
+
+        Code code = (Code) o;
+
+        return getNumber().equals(code.getNumber())
+                && getLetter().equals(code.getLetter());
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
