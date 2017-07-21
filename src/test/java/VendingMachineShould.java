@@ -1,12 +1,31 @@
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.*;
 
+@RunWith(Parameterized.class)
 public class VendingMachineShould {
+
+    private String code;
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                { "5F" }, { "f5" }
+        });
+    }
+
+    public VendingMachineShould(String code) {
+        this.code = code;
+    }
 
     @Test
     public void cancel_action_when_the_code_is_not_valid() {
-        String notValidCode = "5F";
+        String notValidCode = this.code;
         VendingMachine vendingMachine = new VendingMachine();
 
         String result = vendingMachine.fetch(0, notValidCode);
