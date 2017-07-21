@@ -26,6 +26,10 @@ public class Storage {
     }
 
     public double price(Code code) {
-        return 0;
+        if (!storage.containsKey(code)) {
+            return 0;
+        }
+
+        return storage.get(code).getPrice();
     }
 }

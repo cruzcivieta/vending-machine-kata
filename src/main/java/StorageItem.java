@@ -20,4 +20,8 @@ public class StorageItem {
     public boolean isEmpty() {
         return this.amount == 0;
     }
+
+    public double getPrice() {
+        return this.product.getPrice();
+    }
 }

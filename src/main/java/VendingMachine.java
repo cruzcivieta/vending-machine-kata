@@ -228,20 +228,7 @@ class VendingMachine {
         }
     }
 
-    double price(String code) {
-        String l = "NONE";
-        Integer c = 0;
-        for (int i = 0; i < code.length(); i++) {
-            if (i == 0) {
-                l = String.valueOf(code.charAt(i));
-            } else {
-                c = Integer.valueOf(String.valueOf(code.charAt(i)));
-            }
-        }
-        if (prices.containsKey(l)) {
-            return prices.get(l).get(c);
-        } else {
-            return this.storage.price(Code.from(c,l));
-        }
+    double price(Code code) {
+        return this.storage.price(code);
     }
 }

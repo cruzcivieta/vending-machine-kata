@@ -50,11 +50,21 @@ public class VendingMachineShould {
 
     @Test
     public void fetch_zero_when_code_is_not_valid() throws Exception {
-        String validCode = "Z0";
+        Code notValidCode = Code.from(0, "Z");
+        VendingMachine vendingMachine = new VendingMachine();
+
+        Double price = vendingMachine.price(notValidCode);
+
+        assertThat(price).isEqualTo(0);
+    }
+
+    @Test
+    public void fetch_the_price_of_product_by_existing_code() throws Exception {
+        Code validCode = Code.from(0, "A");
         VendingMachine vendingMachine = new VendingMachine();
 
         Double price = vendingMachine.price(validCode);
 
-        assertThat(price).isEqualTo(0);
+        assertThat(price).isEqualTo(2.80);
     }
 }
