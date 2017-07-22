@@ -4,29 +4,25 @@ import static org.assertj.core.api.Assertions.*;
 
 public class VendingMachineShould {
 
-    @Test
-    public void cancel_action_when_the_code_is_not_valid() {
+    @Test(expected = CodeNotFound.class)
+    public void cancel_action_when_the_code_is_not_valid() throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
         Code notValidCode = Code.from(1, "Z");
         VendingMachine vendingMachine = new VendingMachine();
 
-        String result = vendingMachine.fetch(0, notValidCode);
-
-        assertThat(result).isEqualTo("Does not exist that code");
+        vendingMachine.fetch(0, notValidCode);
     }
 
-    @Test
-    public void cancel_action_when_user_not_introduce_the_right_money() {
+    @Test(expected = MoneyIsNotEnoughException.class)
+    public void cancel_action_when_user_not_introduce_the_right_money() throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
         Code validCode = Code.from(1, "A");
         Double insufficientMoney = 2.0;
         VendingMachine vendingMachine = new VendingMachine();
 
-        String result = vendingMachine.fetch(insufficientMoney, validCode);
-
-        assertThat(result).isEqualTo("Put more money!");
+        vendingMachine.fetch(insufficientMoney, validCode);
     }
 
     @Test
-    public void retrieve_the_selected_can() {
+    public void retrieve_the_selected_can() throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
         Code validCode = Code.from(1, "A");
         Double validMoney = 2.8;
         VendingMachine vendingMachine = new VendingMachine();
@@ -36,16 +32,14 @@ public class VendingMachineShould {
         assertThat(result).isEqualTo("Yellow Monster");
     }
 
-    @Test
-    public void warn_when_there_are_no_cans_for_the_code() {
+    @Test(expected = ProductIsEmpty.class)
+    public void warn_when_there_are_no_cans_for_the_code() throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
         Code validCode = Code.from(0, "A");
         Double validMoney = 2.8;
         VendingMachine vendingMachine = new VendingMachine();
 
         vendingMachine.fetch(validMoney, validCode);
-        String result = vendingMachine.fetch(validMoney, validCode);
-
-        assertThat(result).isEqualTo("There are no products for code");
+        vendingMachine.fetch(validMoney, validCode);
     }
 
     @Test

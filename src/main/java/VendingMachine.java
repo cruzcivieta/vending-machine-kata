@@ -197,17 +197,10 @@ class VendingMachine {
         }});
     }
 
-    String fetch(double money, Code code) {
-        try {
-            Product product = this.storage.extract(code, money);
-            return product.getName();
-        } catch (CodeNotFound codeNotFound) {
-            return "Does not exist that code";
-        } catch (ProductIsEmpty productIsEmpty) {
-            return "There are no products for code";
-        } catch (MoneyIsNotEnoughException e) {
-            return "Put more money!";
-        }
+    String fetch(double money, Code code) throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
+        Product product = this.storage.extract(code, money);
+        return product.getName();
+
     }
 
     double returnChange(double money, String code) {
