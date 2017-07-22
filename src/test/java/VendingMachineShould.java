@@ -27,9 +27,9 @@ public class VendingMachineShould {
         Double validMoney = 2.8;
         VendingMachine vendingMachine = new VendingMachine();
 
-        Product result = vendingMachine.fetch(validMoney, validCode);
+        VendingItem result = vendingMachine.fetch(validMoney, validCode);
 
-        assertThat(result.getName()).isEqualTo("Yellow Monster");
+        assertThat(result.getProduct().getName()).isEqualTo("Yellow Monster");
     }
 
     @Test(expected = ProductIsEmpty.class)
@@ -60,5 +60,16 @@ public class VendingMachineShould {
         Double price = vendingMachine.price(validCode);
 
         assertThat(price).isEqualTo(2.80);
+    }
+
+    @Test
+    public void fetch_the_change() {
+        Double validMoney = 5.0;
+        String validCode = "A1";
+        VendingMachine vendingMachine = new VendingMachine();
+
+        Double price = vendingMachine.returnChange(validMoney, validCode);
+
+        assertThat(price).isEqualTo(2.20);
     }
 }
