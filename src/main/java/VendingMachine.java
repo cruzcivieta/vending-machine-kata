@@ -197,26 +197,9 @@ class VendingMachine {
         }});
     }
 
-    Product fetch(double money, Code code) throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
-        return this.storage.extract(code, money);
-    }
-
-    double returnChange(double money, String code) {
-        String l = "NONE";
-        String c = "NONE";
-        for (int i = 0; i < code.length(); i++) {
-            if (i == 0) {
-                l = String.valueOf(code.charAt(i));
-            } else {
-                c = String.valueOf(code.charAt(i));
-            }
-        }
-        if (prices.containsKey(l)) {
-            double value = prices.get(l).get(Integer.valueOf(c));
-            return money - value;
-        } else {
-            return 0;
-        }
+    VendingItem fetch(double money, Code code) throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
+        Product product = this.storage.extract(code, money);
+        return new VendingItem(product, money);
     }
 
     double price(Code code) {

@@ -32,6 +32,18 @@ public class VendingMachineShould {
         assertThat(result.getProduct().getName()).isEqualTo("Yellow Monster");
     }
 
+    @Test
+    public void retrieve_the_selected_can_with_chang() throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
+        Code validCode = Code.from(1, "A");
+        Double validMoney = 5.0;
+        VendingMachine vendingMachine = new VendingMachine();
+
+        VendingItem result = vendingMachine.fetch(validMoney, validCode);
+
+        assertThat(result.getProduct().getName()).isEqualTo("Yellow Monster");
+        assertThat(result.getChange()).isEqualTo(2.2);
+    }
+
     @Test(expected = ProductIsEmpty.class)
     public void warn_when_there_are_no_cans_for_the_code() throws CodeNotFound, ProductIsEmpty, MoneyIsNotEnoughException {
         Code validCode = Code.from(0, "A");
@@ -60,16 +72,5 @@ public class VendingMachineShould {
         Double price = vendingMachine.price(validCode);
 
         assertThat(price).isEqualTo(2.80);
-    }
-
-    @Test
-    public void fetch_the_change() {
-        Double validMoney = 5.0;
-        String validCode = "A1";
-        VendingMachine vendingMachine = new VendingMachine();
-
-        Double price = vendingMachine.returnChange(validMoney, validCode);
-
-        assertThat(price).isEqualTo(2.20);
     }
 }
