@@ -20,4 +20,9 @@ public class Product {
     public boolean isAffordable(double money) {
         return money >= this.price;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

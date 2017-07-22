@@ -27,9 +27,9 @@ public class VendingMachineShould {
         Double validMoney = 2.8;
         VendingMachine vendingMachine = new VendingMachine();
 
-        String result = vendingMachine.fetch(validMoney, validCode);
+        Product result = vendingMachine.fetch(validMoney, validCode);
 
-        assertThat(result).isEqualTo("Yellow Monster");
+        assertThat(result.getName()).isEqualTo("Yellow Monster");
     }
 
     @Test(expected = ProductIsEmpty.class)
